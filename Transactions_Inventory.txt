@@ -1,0 +1,22 @@
+Current Date: Jan 1, 2013
+ 
+Pick up Date: Jan 23, 2013
+Return Date: Feb 2, 2013 = Days: 0
+Full Name: Tony Strak
+Age: 38
+Location: California
+Contact: 5353533535
+Car: Van-2009
+Total Rent Price: 0.00 
+--------------------------------------------------
+Current Date: Feb 1, 2020
+ 
+Pick up Date: Jan 1, 2020
+Return Date: Feb 1, 2020 = Days: 30
+Full Name: bhavyaType First Name Here Type Lashegdet Name Here
+Age: 48
+Location: Type CoUnited Statesmplete Address Here
+Contact: Type Contact4846862904 Number Here
+Car: Pick-up-2013
+Total Rent Price: 9000.00 
+--------------------------------------------------
