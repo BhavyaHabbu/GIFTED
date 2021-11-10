@@ -675,51 +675,7 @@ public class GiftedlView extends JFrame {
 			
 				if (Pattern.matches("^[a-zA-Z]+$",nameFirstTF.getText()) && Pattern.matches("^[a-zA-Z]+$",lastNameTF.getText()) && (genderTF.getText().equals("M") || genderTF.getText().equals("F")|| genderTF.getText().equals("m")||genderTF.getText().equals("f")) && Pattern.matches("^\\d{10}$", mobileNoTF.getText()) && Pattern.matches("^http.?:\\/\\/.*|HTTP.?:\\/\\/.*",socialMediaTF.getText())) {
 					cL.show(pane, "createEventForm");
-					String firstNameText = nameFirstTF.getText();
-					String lastNameText = lastNameTF.getText();
-					String genderText = genderTF.getText();
-					String mobileNoText = mobileNoTF.getText();
-					String month = String.valueOf(bMCB.getSelectedItem());
-					DateTimeFormatter parser = DateTimeFormatter.ofPattern("MMM").withLocale(Locale.ENGLISH);
-					TemporalAccessor accessor = parser.parse(month);
-					System.out.println(accessor.get(ChronoField.MONTH_OF_YEAR));
-					int monthValue = accessor.get(ChronoField.MONTH_OF_YEAR);
-					String date = String.valueOf(bDCB.getSelectedItem());
-					String year = String.valueOf(bYCB.getSelectedItem());
-					String DOBText = year + "-" + monthValue + "-" + date;
-					System.out.println(DOBText);
-					String socialMediaText = socialMediaTF.getText();
-					String friendFirstNameText = friendFirstNameTF.getText();
-					String friendLastNameText = friendFirstNameTF.getText();
-					String friendMobileNoText = friendMobileTF.getText();
-					// userProfile.setProfile(firstNameText, lastNameText,genderText,mobileNoText);
-					userProfile.setProfile(firstNameText, lastNameText, genderText, mobileNoText, DOBText,
-							socialMediaText, friendFirstNameText, friendLastNameText, friendMobileNoText);
-					socialMediaTF.setText(null);
-					nameFirstTF.setText(null);
-					lastNameTF.setText(null);
-					friendFirstNameTF.setText(null);
-					friendLastNameTF.setText(null);
-					friendMobileTF.setText(null);
-					genderTF.setText(null);
-					mobileNoTF.setText(null);
-					try {
-						String url = "jdbc:mysql://localhost:3306/gifted_project";
-						String userName = "root";
-						String password = "root";
-						Connection con = DriverManager.getConnection(url, userName, password);
-						Statement st = con.createStatement();
-						String sql = "INSERT INTO createprofile(firstName,lastName,gender,mobileNumber,DOB,handlerLink,friendFirstName,friendLastName,friendMobileNumber) VALUES ('"
-								+ firstNameText + "','" + lastNameText + "','" + genderText + "','" + mobileNoText
-								+ "','" + DOBText + "','" + socialMediaText + "','" + friendFirstNameText + "','"
-								+ friendLastNameText + "','" + friendMobileNoText + "')";
-					
-						st.executeUpdate(sql);
-						st.close();
-						con.close();
-					} catch (Exception e) {
-
-					}
+			
 				}
 
 			} 
@@ -731,25 +687,11 @@ public class GiftedlView extends JFrame {
 			CardLayout cL = (CardLayout) pane.getLayout();
 			if (event.getActionCommand().equals("nextToCreateEvent")) {
 				cL.show(pane, "createWishListForm");
-				String eventNameText =String.valueOf(cECB.getSelectedItem());
-				System.out.println(cECB.getSelectedItem());
-				try {
-					String url = "jdbc:mysql://localhost:3306/gifted_project";
-					String userName = "root";
-					String password = "root";
-					Connection con = DriverManager.getConnection(url, userName, password);
-					Statement st = con.createStatement();
-					String sql = "INSERT INTO createevent(eventName) VALUES('"+ eventNameText +"')";
-					st.executeUpdate(sql);
-					st.close();
-					con.close();
-				} catch (Exception e) {
-
-				}
-			}
+				
 		
 	
 		}
+	}
 	}
 
 	// login button
