@@ -1,0 +1,39 @@
+
+drop table createprofile;
+create table createprofile(createprofile_ID INT NOT NULL AUTO_INCREMENT, userID varchar(200) not null unique,
+firstName varchar(200) not null,lastName varchar(200) not null ,gender varchar(2) not null,
+mobileNumber varchar(10) not null,
+DOB date not null,handlerLink varchar(1000) not null, friendFirstName varchar(200) ,friendLastName varchar(200),
+friendMobileNumber varchar(10) not null,
+PRIMARY KEY (createprofile_ID));
+
+drop table friendlist;
+create table friendlist(friendlist_ID INT NOT NULL AUTO_INCREMENT, createprofile_ID INT not null,
+friendFN varchar(200) not null,friendLN  varchar(200) not null ,
+friendMN varchar(10) not null,
+PRIMARY KEY (friendlist_ID),FOREIGN KEY (createprofile_ID)
+        REFERENCES createprofile(createprofile_ID));
+        
+drop table createevent;    
+create table createevent(eventID INT NOT NULL AUTO_INCREMENT, eventName varchar(200) not null, primary key(eventID));
+
+INSERT INTO createevent(eventName) VALUES(upper('Birthday'));
+INSERT INTO createevent(eventName) VALUES(upper('Wedding'));
+INSERT INTO createevent(eventName) VALUES(upper('GraduationDay'));
+INSERT INTO createevent(eventName) VALUES(upper('Anniversery'));
+INSERT INTO createevent(eventName) VALUES(upper('BabyShower'));
+select * from createevent;
+
+drop table createwishlist;
+create table createwishlist(wishlistID INT NOT NULL AUTO_INCREMENT,
+createprofile_ID INT not null,
+eventID INT not null,
+itemName varchar(100) not null,brand varchar(100), color varchar(50),
+commentItem varchar(500),
+price INT, priority INT,
+PRIMARY KEY (wishlistID),FOREIGN KEY (createprofile_ID)
+        REFERENCES createprofile(createprofile_ID),FOREIGN KEY (eventID)
+        REFERENCES createevent(eventID));
+
+
+select * from createwishlist;

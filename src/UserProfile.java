@@ -4,7 +4,7 @@ import java.io.*;
 /////////////////////////////////////////////Car class/////////////////////////////////////
 public class UserProfile {
 
-	private String firstName,lastName,gender,socialMediaLink,birthDate,mobileNo,friendFirstName,friendLastName,friendMobileNo;
+	private String firstName,lastName,gender,socialMediaLink,birthDate,mobileNo,friendFirstName,friendLastName,friendMobileNo,userID,loginUID;
 
 	
 	
@@ -16,14 +16,14 @@ public class UserProfile {
 		socialMediaLink="";
 		mobileNo="";
 		birthDate="";
-		friendFirstName="";
 		friendLastName="";
 		friendMobileNo="";
-		
+		userID="";
+		loginUID="";
 		
 	}
 	
-	public void setProfile(String fN, String lN, String gen,String mN, String bD,String sML,String fFN,String fLN, String fMN ){
+	public void setUserProfile(String fN, String lN, String gen,String mN, String bD,String sML,String uID ){
 	//	public void setProfile(String fN, String lN, String gen,String mN ){
 		//public void setProfile(String fN, String lN){	
 		firstName = fN;
@@ -31,13 +31,22 @@ public class UserProfile {
 		gender=gen;
 		mobileNo = mN;	
 		birthDate=bD;
-		socialMediaLink=sML;
-		friendFirstName=fFN;
-		friendLastName=fLN;
-		friendMobileNo=fMN;
-	
+	    userID=uID;
+	    
 	}
 	
+	public void setFriend(String fFN,String fLN, String fMN){
+		//	public void setProfile(String fN, String lN, String gen,String mN ){
+			//public void setProfile(String fN, String lN){	
+			friendFirstName=fFN;
+			friendLastName=fLN;
+			friendMobileNo=fMN;
+	
+		}
+	public void setLoginUserID(String lUID) {
+		loginUID=lUID;
+	}
+		
 	public String getFirstName() {
 		return firstName;
 	}
@@ -58,6 +67,12 @@ public class UserProfile {
 	}
 	public String getBirthDate() {
 		return birthDate;
+}
+	public String getUserID() {
+		return userID;
+}
+	public String getLoginUID() {
+		return loginUID;
 }
 //	public void saveToFile() throws IOException {
 		

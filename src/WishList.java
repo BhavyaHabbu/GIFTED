@@ -16,12 +16,26 @@ public class WishList {
 		price=0;
 	}
 	
-	public void setCustomer(String item, String brand, String color, String comment){
+	public void setItem(String item){
 	
 		this.item = item;
-		this.brand = brand;
-		this.color = color;
-		this.comment = comment;
+
+	}
+	
+	public void setBrand(String brand) {
+		this.brand=brand;
+	}
+	public void setColor(String color) {
+		this.color=color;
+	}
+	public void setComment(String comment) {
+		this.comment=comment;
+	}
+	public void setPrice(int price) {
+		this.price=price;
+	}
+	public void setPriority(int priority) {
+		this.priority=priority;
 	}
 	
 	public String getItemName() {

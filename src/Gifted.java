@@ -1,14 +1,14 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-
+import java.util.*;
 public class Gifted{ 
 
   private static final int WIDTH = 1000;
   private static final int HEIGHT = 600;
 
 //////////////////////////////////////////////////////////MAIN//////////////////////////////////////////
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
 
     JFrame frame = new GiftedlView();
     ImageIcon img = new ImageIcon("images/freindship.JPG");
