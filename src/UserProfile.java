@@ -4,7 +4,7 @@ import java.io.*;
 /////////////////////////////////////////////Car class/////////////////////////////////////
 public class UserProfile {
 
-	private String firstName,lastName,gender,socialMediaLink,birthDate,mobileNo,friendFirstName,friendLastName,friendMobileNo,userID,loginUID;
+	private String firstName,lastName,gender,socialMediaLink,birthDate,mobileNo,friendFirstName,friendLastName,friendMobileNo,userID,loginUID,viewLoginUID;
 
 	
 	
@@ -74,6 +74,12 @@ public class UserProfile {
 	public String getLoginUID() {
 		return loginUID;
 }
+	public String getViewLoginUID() {
+		return viewLoginUID;
+	}
+	public void setViewLoginUserID(String lVUID) {
+		viewLoginUID=lVUID;
+	}
 //	public void saveToFile() throws IOException {
 		
 //		PrintWriter outFile = new PrintWriter(new FileOutputStream(new File("Cars_Inventory.txt"), true));
