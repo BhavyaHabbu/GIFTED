@@ -724,13 +724,6 @@ public class GiftedlView extends JFrame{
 		createEventL.setFont(new Font("Serif", Font.BOLD, 23));
 		createEventL.setForeground(Color.CYAN);
 		createEventL.setBounds(150, 1, 250, 100);
-		//	showEventP.add(createEventL);
-
-		//		String[] showEventCB = { "BirthDay", "Wedding", "Anniversery", "GraduationDay", "BabyShower" };
-		//		cDECB = new JComboBox(showEventCB);
-		//		cDECB.setBounds(150, 75, 160, 25);
-		//		showEventP.add(cDECB);
-
 		showWishListL = new JLabel("WishList");
 		showWishListL.setFont(new Font("Serif", Font.BOLD, 23));
 		showWishListL.setForeground(Color.CYAN);
