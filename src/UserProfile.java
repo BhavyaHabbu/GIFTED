@@ -4,7 +4,7 @@ import java.io.*;
 /////////////////////////////////////////////Car class/////////////////////////////////////
 public class UserProfile {
 
-	private String firstName,lastName,gender,socialMediaLink,birthDate,mobileNo,friendFirstName,friendLastName,friendMobileNo,userID,loginUID,viewLoginUID;
+	private String firstName,lastName,gender,socialMediaLink,birthDate,mobileNo,friendFirstName,friendLastName,friendMobileNo,userID,loginUID,viewLoginUID,password,eventName;
 
 	
 	
@@ -20,10 +20,12 @@ public class UserProfile {
 		friendMobileNo="";
 		userID="";
 		loginUID="";
+		password="";
+		eventName="";
 		
 	}
 	
-	public void setUserProfile(String fN, String lN, String gen,String mN, String bD,String sML,String uID ){
+	public void setUserProfile(String fN, String lN, String gen,String mN, String bD,String sML,String uID,String pwd,String eventName ){
 	//	public void setProfile(String fN, String lN, String gen,String mN ){
 		//public void setProfile(String fN, String lN){	
 		firstName = fN;
@@ -32,6 +34,8 @@ public class UserProfile {
 		mobileNo = mN;	
 		birthDate=bD;
 	    userID=uID;
+	    password=pwd;
+	    eventName=eventName;
 	    
 	}
 	
@@ -43,6 +47,28 @@ public class UserProfile {
 			friendMobileNo=fMN;
 	
 		}
+	public String getEventName() {
+		return eventName;
+		
+	}
+	public void setEventName(String EN) {
+		eventName=EN;
+		
+	}
+	public String getUpdateEventName() {
+		return eventName;
+	}
+	
+	public void setUpdateEventName(String EN) {
+		eventName=EN;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPWD(String pwd ) {
+		password=pwd;
+	}
 	public void setLoginUserID(String lUID) {
 		loginUID=lUID;
 	}

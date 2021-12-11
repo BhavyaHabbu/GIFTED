@@ -23,26 +23,28 @@ public class GiftedlView extends JFrame{
 	// as global declaration
 	private WishList wishList = new WishList();// access class WishList as global declaration
 	private UserProfile userProfile = new UserProfile();
+	private WishListCreate wishListCreate = new WishListCreate();
 	Container pane = getContentPane();
-	private JPanel mainP, createP, createEventP, createWishListP, loginP, updateP, showEventP,viewLoginP; // panels for CardLayout
+	private JPanel mainP, createP, createEventP, createWishListP, loginP, updateP, showEventP,viewLoginP,createWishListUpdateProfileP; // panels for CardLayout
 	private JLabel titleL, profileC, profileInfo, profileV, profileU,friendProfileInfo; // inside the panel of mainP
 	private JButton mainNextC, mainNextV,mainNextU;
-	private JLabel firstNameL, mainTitleL,lastNameL, mobileNoL, socialMediaL, birthDateL, eventL, genderL, loginUsernameL,viewLoginUsernameL,
+	private JLabel firstNameL, mainTitleL,lastNameL, mobileNoL, socialMediaL, birthDateL, eventL, genderL, loginUsernameL,viewLoginUsernameL,userIDPWD,
 	loginUserLastNameL, loginPasswordL, friendFirstNameL, friendLastNameL; // inside the panel of createP
 	private JLabel firstNameChecker, lastNameChecker, genderChecker, contactChecker;
 	private JTextField nameFirstTF, firstNameTF, lastNameTF, locationTF, contactTF, mobileNoTF, genderTF, socialMediaTF,
 	loginPasswordTF, loginUserIDTF, loginMobileNoTF, nameFriendFirstTF, lastFriendNameTF, friendFirstNameTF,viewLoginUserIDTF,
 	friendLastNameTF;
-	private JLabel socialMediaLinkChecker, DOBChecker,userIDChecker,loginUserIDChecker,eventNameChecker,viewLoginUserIDChecker;
+	private JPasswordField	userPWDTF;
+	private JLabel socialMediaLinkChecker, DOBChecker,userIDChecker,loginUserIDChecker,eventNameChecker,viewLoginUserIDChecker,userPWDChecker;
 	private JButton createNextB, createBackB, loginNextB, loginBackB,updtateNextB,viewLoginBackB,viewLoginNextB;
-	private JComboBox bMCB, bDCB, bYCB,cDECB,sECB;
+	private JComboBox bMCB, bDCB, bYCB,cDECB,sECB,cUECB;
 	private JTextField createTF,userIDTF;
-	private JLabel createEventL, updateEventL,userIDL,updateL, createWishListL, updateWishListL, showWishListL, showEventL,
+	private JLabel createEventL, updateEventL,userIDL,updateL, createWishListL, updateWishListL, showWishListL, showEventL,createEventUpdateL,createPriorityUpdateL,createPriceUpdateL,createCommentUpdateL,createColorUpdateL,createBrandUpdateL,createItemUpdateL,
 	friendMobileNoL;
-	private JTextField createEventTF, updateEventTF, createWishListTF, updateWishListTF, showWishListTF, friendMobileTF;
+	private JTextField createEventTF, updateEventTF, createWishListTF, updateWishListTF,createPriorityUpdateTF, showWishListTF, friendMobileTF,createPriceUpdateTF,createCommentUpdateTF,createColorUpdateTF,createBrandUpdateTF,createItemUpdateTF;
 	// private JLabel firstNameChecker, lastNameChecker, genderChecker,
-	// contactChecker;
-	private JButton customerNextB, customerBackB, viewNextB, viewBackB,createWishListSaveB;
+	// contactChecker
+	private JButton customerNextB, customerBackB, viewNextB, viewBackB,createWishListSaveB,updtateCreateNextB,createWishListUpdateSaveB,createWishListUpdateBackB;
 	private JComboBox cECB, uECB, showEventCB;
 	private JLabel createItemL, createBrandL,showItemL, createColorL, createCommentL, createPriceL, createPriorityL; // inside the
 	private JTextField createItemTF, createBrandTF, createColorTF, createCommentTF, createPriceTF, createPriorityTF;
@@ -85,7 +87,7 @@ public class GiftedlView extends JFrame{
 		//==========button for create profile================//
 		ImageIcon mainNextImage = new ImageIcon("images/customer.GIF");
 		mainNextC = new JButton(mainNextImage);
-		mainNextC.setBackground(Color.CYAN);
+		mainNextC.setBackground(Color.BLUE);
 		mainNextC.addActionListener(new mainNextButton());
 		mainNextC.setBounds(70, 70, 100, 50);
 		mainNextC.setRolloverEnabled(true);
@@ -102,7 +104,7 @@ public class GiftedlView extends JFrame{
 		//============= button for view profile============//
 		ImageIcon mainNextImage1 = new ImageIcon("images/next.GIF");
 		mainNextV = new JButton(mainNextImage1);
-		mainNextV.setBackground(Color.CYAN);
+		mainNextV.setBackground(Color.BLUE);
 		mainNextV.addActionListener(new mainNextButton());
 		mainNextV.setBounds(720, 140, 100, 50);
 		mainNextV.setRolloverEnabled(true);
@@ -122,7 +124,7 @@ public class GiftedlView extends JFrame{
 		//============= button for view profile============//
 		ImageIcon mainNextImage2 = new ImageIcon("images/next.GIF");
 		mainNextU= new JButton(mainNextImage2);
-		mainNextU.setBackground(Color.CYAN);
+		mainNextU.setBackground(Color.BLUE);
 		mainNextU.addActionListener(new mainNextButton());
 		mainNextU.setBounds(70, 230, 100, 50);
 		mainNextU.setRolloverEnabled(true);
@@ -213,6 +215,13 @@ public class GiftedlView extends JFrame{
 		userIDL.setForeground(Color.CYAN);
 		userIDL.setBounds(50, 340, 150, 100);
 		createP.add(userIDL);
+		
+		userIDPWD = new JLabel("Password:");
+		userIDPWD.setFont(new Font("Verdana", Font.BOLD, 15));
+		userIDPWD.setForeground(Color.CYAN);
+		userIDPWD.setBounds(50, 380, 150, 100);
+		createP.add(userIDPWD);
+		
 
 		// -----------------------------------------------------------------------------//
 		nameFirstTF = new JTextField("");
@@ -262,6 +271,14 @@ public class GiftedlView extends JFrame{
 		userIDTF.setForeground(Color.GRAY);
 		userIDTF.setBounds(200, 380, 250, 30);
 		createP.add(userIDTF);
+		
+		userPWDTF = new JPasswordField(15);
+		userPWDTF.setVisible(true);
+		userPWDTF.setToolTipText("Enter your password here, It should be unique-alphanumeric");
+		userPWDTF.setHorizontalAlignment(JTextField.CENTER);
+		userPWDTF.setForeground(Color.GRAY);
+		userPWDTF.setBounds(200, 420, 250, 30);
+		createP.add(userPWDTF);
 
 		pane.add(createP, "createProfileDetailForm");
 		//=============data=============//
@@ -299,10 +316,16 @@ public class GiftedlView extends JFrame{
 		userIDChecker.setFont(new Font("Serif", Font.BOLD, 14));
 		userIDChecker.setBounds(460, 340, 100, 100);
 		createP.add(userIDChecker);
+		
+		userPWDChecker = new JLabel("");
+		userPWDChecker.setFont(new Font("Serif", Font.BOLD, 14));
+		userPWDChecker.setBounds(460, 340, 100, 100);
+		createP.add(userPWDChecker);
+		
 		//=============create event page==================//
 		ImageIcon dateNextImage = new ImageIcon("images/create.GIF");
 		createNextB = new JButton(dateNextImage);
-		createNextB.setBackground(Color.CYAN);
+		createNextB.setBackground(Color.GREEN);
 		createNextB.addActionListener(new createNextButton());
 		createNextB.setBounds(550, 500, 100, 50);
 		createNextB.setActionCommand("nextToCreateProfile");
@@ -311,7 +334,7 @@ public class GiftedlView extends JFrame{
 		// =========to go back welcome section====//
 		ImageIcon dateBackImage = new ImageIcon("images/back.GIF");
 		createBackB = new JButton(dateBackImage);
-		createBackB.setBackground(Color.CYAN);
+		createBackB.setBackground(Color.GREEN);
 		createBackB.setBounds(380, 500, 100, 50);
 		createBackB.addActionListener(new createBackButton());
 		createBackB.setActionCommand("backToWelcomeForm");
@@ -325,7 +348,7 @@ public class GiftedlView extends JFrame{
 
 		friendProfileInfo = new JLabel("Freindlist:");
 		friendProfileInfo.setFont(new Font("Serif", Font.BOLD, 22));
-		friendProfileInfo.setForeground(Color.CYAN);
+		friendProfileInfo.setForeground(Color.GREEN);
 		friendProfileInfo.setBounds(150, 1, 350, 100);
 		createEventP.add(friendProfileInfo);
 
@@ -405,7 +428,7 @@ public class GiftedlView extends JFrame{
 
 		ImageIcon createEventNextImage = new ImageIcon("images/create.GIF");
 		customerNextB = new JButton(createEventNextImage);
-		customerNextB.setBackground(Color.CYAN);
+		customerNextB.setBackground(Color.GREEN);
 		customerNextB.setBounds(550, 300, 100, 50);
 		customerNextB.setRolloverEnabled(true);
 		customerNextB.setRolloverIcon(createEventNextImage);
@@ -418,7 +441,7 @@ public class GiftedlView extends JFrame{
 		//=========back to Create event page===========================//
 		ImageIcon createEventBackImage = new ImageIcon("images/customer_back.GIF");
 		customerBackB = new JButton(createEventBackImage);
-		customerBackB.setBackground(Color.CYAN);
+		customerBackB.setBackground(Color.GREEN);
 		customerBackB.setBounds(350, 300, 100, 50);
 		customerBackB.setRolloverEnabled(true);
 		customerBackB.setRolloverIcon(createEventBackImage);
@@ -513,7 +536,7 @@ public class GiftedlView extends JFrame{
 
 		ImageIcon createWishListBackImage = new ImageIcon("images/customer_back.GIF");
 		createWishListBackB = new JButton(createWishListBackImage);
-		createWishListBackB.setBackground(Color.CYAN);
+		createWishListBackB.setBackground(Color.GREEN);
 		createWishListBackB.setBounds(330, 400, 100, 50);
 		createWishListBackB.setRolloverEnabled(true);
 		createWishListBackB.setRolloverIcon(createWishListBackImage);
@@ -526,7 +549,7 @@ public class GiftedlView extends JFrame{
 
 		ImageIcon wishListSavekImage = new ImageIcon("images/create.GIF");
 		createWishListSaveB = new JButton(wishListSavekImage);
-		createWishListSaveB.setBackground(Color.CYAN);
+		createWishListSaveB.setBackground(Color.GREEN);
 		createWishListSaveB.setBounds(530, 400, 100, 50);
 		createWishListSaveB.setRolloverEnabled(true);
 		createWishListSaveB.setRolloverIcon(wishListSavekImage);
@@ -536,6 +559,114 @@ public class GiftedlView extends JFrame{
 		createWishListSaveB.setToolTipText("SAVE");
 		createWishListP.add(createWishListSaveB);
 		//pane.add(createWishListP, "createWishListForm");
+//=============================updateProfile create wishlist==================================
+		createWishListUpdateProfileP = new JPanel(null);
+		createWishListUpdateProfileP.setBackground(Color.DARK_GRAY);
+
+		createItemUpdateL = new JLabel("Create Item:");
+		createItemUpdateL.setFont(new Font("Verdana", Font.BOLD, 15));
+		createItemUpdateL.setForeground(Color.CYAN);
+		createItemUpdateL.setBounds(50, 1, 250, 100);
+		createWishListUpdateProfileP.add(createItemUpdateL);
+
+		createBrandUpdateL = new JLabel("Create Brand:");
+		createBrandUpdateL.setFont(new Font("Verdana", Font.BOLD, 15));
+		createBrandUpdateL.setForeground(Color.CYAN);
+		createBrandUpdateL.setBounds(50, 50, 250, 100);
+		createWishListUpdateProfileP.add(createBrandUpdateL);
+
+		createColorUpdateL = new JLabel("Create Color:");
+		createColorUpdateL .setFont(new Font("Verdana", Font.BOLD, 15));
+		createColorUpdateL .setForeground(Color.CYAN);
+		createColorUpdateL .setBounds(50, 100, 250, 100);
+		createWishListUpdateProfileP.add(createColorUpdateL );
+
+		createCommentUpdateL = new JLabel("Create Comment:");
+		createCommentUpdateL.setFont(new Font("Verdana", Font.BOLD, 15));
+		createCommentUpdateL.setForeground(Color.CYAN);
+		createCommentUpdateL.setBounds(50, 150, 250, 100);
+		createWishListUpdateProfileP.add(createCommentUpdateL);
+
+		createPriceUpdateL = new JLabel("Create price:");
+		createPriceUpdateL.setFont(new Font("Verdana", Font.BOLD, 15));
+		createPriceUpdateL.setForeground(Color.CYAN);
+		createPriceUpdateL.setBounds(50, 200, 250, 100);
+		createWishListUpdateProfileP.add(createPriceUpdateL);
+
+		createPriorityUpdateL = new JLabel("Create Priority:");
+		createPriorityUpdateL.setFont(new Font("Verdana", Font.BOLD, 15));
+		createPriorityUpdateL.setForeground(Color.CYAN);
+		createPriorityUpdateL.setBounds(50, 250, 250, 100);
+		createWishListUpdateProfileP.add(createPriorityUpdateL);
+
+		createItemUpdateTF = new JTextField("");
+		createItemUpdateTF.setHorizontalAlignment(JTextField.CENTER);
+		createItemUpdateTF.setToolTipText("Enter the item name you wish to buy");
+		createItemUpdateTF.setForeground(Color.GRAY);
+		createItemUpdateTF.setBounds(250, 40, 250, 30);
+		createWishListUpdateProfileP.add(createItemUpdateTF);
+
+		createBrandUpdateTF = new JTextField("");
+		createBrandUpdateTF.setHorizontalAlignment(JTextField.CENTER);
+		createBrandUpdateTF.setToolTipText("Enter the preferred brand");
+		createBrandUpdateTF.setForeground(Color.GRAY);
+		createBrandUpdateTF.setBounds(250, 90, 250, 30);
+		createWishListUpdateProfileP.add(createBrandUpdateTF);
+
+		createColorUpdateTF = new JTextField(""); 
+		createColorUpdateTF.setHorizontalAlignment(JTextField.CENTER);
+		createColorUpdateTF.setToolTipText("Enter the preferred color of the item");
+		createColorUpdateTF.setForeground(Color.GRAY);
+		createColorUpdateTF.setBounds(250, 140, 250, 30);
+		createWishListUpdateProfileP.add(createColorUpdateTF);
+
+		createCommentUpdateTF = new JTextField("");
+		createCommentUpdateTF.setHorizontalAlignment(JTextField.CENTER);
+		createCommentUpdateTF.setToolTipText("If you wish to add some more details about the item");
+		createCommentUpdateTF.setForeground(Color.GRAY);
+		createCommentUpdateTF.setBounds(250, 190, 250, 30);
+		createWishListUpdateProfileP.add(createCommentUpdateTF);
+
+		createPriceUpdateTF = new JTextField(""); 
+		createPriceUpdateTF.setHorizontalAlignment(JTextField.CENTER);
+		createPriceUpdateTF.setToolTipText("Price of the item");
+		createPriceUpdateTF.setForeground(Color.GRAY);
+		createPriceUpdateTF.setBounds(250, 240, 250, 30);
+		createWishListUpdateProfileP.add(createPriceUpdateTF);
+
+		createPriorityUpdateTF = new JTextField("");
+		createPriorityUpdateTF.setHorizontalAlignment(JTextField.CENTER);
+		createPriorityUpdateTF.setToolTipText("Priority you wish to give to the item");
+		createPriorityUpdateTF.setForeground(Color.GRAY);
+		createPriorityUpdateTF.setBounds(250, 290, 250, 30);
+		createWishListUpdateProfileP.add(createPriorityUpdateTF);
+		pane.add(createWishListUpdateProfileP, "createWishListUpdateProfileForm");
+
+		ImageIcon createWishListBackImage1 = new ImageIcon("images/customer_back.GIF");
+		createWishListUpdateBackB = new JButton(createWishListBackImage1);
+		createWishListUpdateBackB.setBackground(Color.GREEN);
+		createWishListUpdateBackB.setBounds(330, 400, 100, 50);
+		createWishListUpdateBackB.setRolloverEnabled(true);
+		createWishListUpdateBackB.setRolloverIcon(createWishListBackImage1);
+		createWishListUpdateBackB.setPressedIcon(createWishListBackImage1);
+		createWishListUpdateBackB.addActionListener(new createWishListUpdateBackButton());
+		createWishListUpdateBackB.setActionCommand("backToCreateEvent");
+		createWishListUpdateProfileP.add(createWishListUpdateBackB);
+		createWishListUpdateProfileP.setToolTipText("BACK");
+		pane.add(createWishListUpdateProfileP, "createWishListUpdateProfileForm");
+
+		ImageIcon wishListSavekImage1 = new ImageIcon("images/create.GIF");
+		createWishListUpdateSaveB = new JButton(wishListSavekImage1);
+		createWishListUpdateSaveB.setBackground(Color.GREEN);
+		createWishListUpdateSaveB.setBounds(530, 400, 100, 50);
+		createWishListUpdateSaveB.setRolloverEnabled(true);
+		createWishListUpdateSaveB.setRolloverIcon(wishListSavekImage1);
+		createWishListUpdateSaveB.setPressedIcon(wishListSavekImage1);
+		createWishListUpdateSaveB.addActionListener(new wishListUpdateSaveButton());
+		createWishListUpdateSaveB.setActionCommand("saveWishlistUpdateProfile");
+		createWishListUpdateSaveB.setToolTipText("SAVE");
+		createWishListUpdateProfileP.add(createWishListUpdateSaveB);
+		//pane.add(createWishListUpdateProfileP, "createWishListForm");
 
 
 		// view profile details==========//
@@ -565,7 +696,7 @@ public class GiftedlView extends JFrame{
 		//===========Login page next button=============//
 		ImageIcon loginNextImage = new ImageIcon("images/create.GIF");
 		loginNextB = new JButton(loginNextImage);
-		loginNextB.setBackground(Color.CYAN);
+		loginNextB.setBackground(Color.GREEN);
 		loginNextB.setBounds(550, 200, 100, 50);
 		loginNextB.setRolloverEnabled(true);
 		loginNextB.setRolloverIcon(loginNextImage);
@@ -578,7 +709,7 @@ public class GiftedlView extends JFrame{
 		//============bcak to login page==================//
 		ImageIcon loginBackImage = new ImageIcon("images/customer_back.GIF");
 		loginBackB = new JButton(loginBackImage);
-		loginBackB.setBackground(Color.CYAN);
+		loginBackB.setBackground(Color.GREEN);
 		loginBackB.setBounds(350, 200, 100, 50);
 		loginBackB.setRolloverEnabled(true);
 		loginBackB.setRolloverIcon(loginBackImage);
@@ -616,7 +747,7 @@ public class GiftedlView extends JFrame{
 		//===========Login page next button=============//
 		ImageIcon viewLoginNextImage = new ImageIcon("images/create.GIF");
 		viewLoginNextB = new JButton(viewLoginNextImage);
-		viewLoginNextB.setBackground(Color.CYAN);
+		viewLoginNextB.setBackground(Color.GREEN);
 		viewLoginNextB.setBounds(550, 200, 100, 50);
 		viewLoginNextB.setRolloverEnabled(true);
 		viewLoginNextB.setRolloverIcon(viewLoginNextImage);
@@ -629,7 +760,7 @@ public class GiftedlView extends JFrame{
 		//============bcak to login page==================//
 		ImageIcon viewLoginBackImage = new ImageIcon("images/customer_back.GIF");
 		viewLoginBackB = new JButton(viewLoginBackImage );
-		viewLoginBackB.setBackground(Color.CYAN);
+		viewLoginBackB.setBackground(Color.GREEN);
 		viewLoginBackB.setBounds(350, 200, 100, 50);
 		viewLoginBackB.setRolloverEnabled(true);
 		viewLoginBackB.setRolloverIcon(viewLoginBackImage );
@@ -645,27 +776,27 @@ public class GiftedlView extends JFrame{
 		//==================================================//
 		updateP = new JPanel(null);
 		updateP.setBackground(Color.DARK_GRAY);
-		ImageIcon imageUpdateProfile = new ImageIcon("images/updateProfile1.JPG");
-		// Image background = Toolkit.getDefaultToolkit().createImage("Background.png");
-		updateL = new JLabel(imageUpdateProfile);
-		updateL.setBounds(280, 0, 800, 575);
-		updateP.add(updateL);
+//		ImageIcon imageUpdateProfile = new ImageIcon("images/updateProfile1.JPG");
+//		// Image background = Toolkit.getDefaultToolkit().createImage("Background.png");
+//		updateL = new JLabel(imageUpdateProfile);
+//		updateL.setBounds(280, 0, 800, 575);
+//		updateP.add(updateL);
 
 		updateEventL = new JLabel(" Update your profile");
 		updateEventL.setFont(new Font("Serif", Font.BOLD, 26));
 		updateEventL.setForeground(Color.CYAN);
-		updateEventL.setBounds(10, 1, 250, 100);
+		updateEventL.setBounds(350, 1, 250, 100);
 		updateP.add(updateEventL);
 
-		showEventL = new JLabel(" Update Event");
+		showEventL = new JLabel(" Update Existing Event");
 		showEventL.setFont(new Font("Serif", Font.BOLD, 23));
 		showEventL.setForeground(Color.CYAN);
-		showEventL.setBounds(45, 50, 250, 100);
+		showEventL.setBounds(500, 50, 250, 100);
 		updateP.add(showEventL);
 
 		String[] showEventCB = {};
 		sECB=new JComboBox(showEventCB);
-		sECB.setBounds(50, 130, 125, 30);
+		sECB.setBounds(500, 140, 125, 30);
 		try {
 			String url = "jdbc:mysql://localhost:3306/gifted_project";
 			String userName = "root";
@@ -675,8 +806,8 @@ public class GiftedlView extends JFrame{
 			Statement st = con.createStatement();
 			ResultSet rs =st.executeQuery(sql);
 			while(rs.next()) {
-				String eventNameText=rs.getString("eventName");
-				sECB.addItem(eventNameText);
+				String eventNameUpdateText=rs.getString("eventName");
+				sECB.addItem(eventNameUpdateText);
 			}
 			st.close();
 			con.close();
@@ -685,29 +816,59 @@ public class GiftedlView extends JFrame{
 		updateP.add(sECB);
 		eventNameChecker=new JLabel("");
 		eventNameChecker.setFont(new Font("Serif", Font.BOLD, 14));
-		eventNameChecker.setBounds(50, 130, 500, 100);
+		eventNameChecker.setBounds(500, 140, 500, 100);
 		updateP.add(eventNameChecker);
+
+		createEventUpdateL = new JLabel(" Create New Event");
+		createEventUpdateL.setFont(new Font("Serif", Font.BOLD, 23));
+		createEventUpdateL.setForeground(Color.CYAN);
+		createEventUpdateL.setBounds(45, 50, 250, 100);
+		updateP.add(createEventUpdateL );
+
+		String[] createEventUpdateCB = {};
+		cUECB=new JComboBox(createEventUpdateCB );
+		cUECB.setBounds(45, 140, 125, 30);
+		try {
+			String url = "jdbc:mysql://localhost:3306/gifted_project";
+			String userName = "root";
+			String password = "root";
+			String sql= "select eventName from createevent";
+			Connection con = DriverManager.getConnection(url, userName, password);
+			Statement st = con.createStatement();
+			ResultSet rs =st.executeQuery(sql);
+			while(rs.next()) {
+				String eventNameUpdateText=rs.getString("eventName");
+				cUECB.addItem(eventNameUpdateText);
+			}
+			st.close();
+			con.close();
+		}catch (Exception e) {
+		}
+
+
+		//	cECB.setToolTipText("Select month of your Birthday");
+		updateP.add(cUECB);
 		pane.add(updateP, "updateProfileForm");
 
 		//========== vieProfile buttons==================//
 
 		ImageIcon updateProfileNextImage = new ImageIcon("images/create.GIF");
-		updtateNextB = new JButton(updateProfileNextImage);
-		updtateNextB.setBackground(Color.CYAN);
-		updtateNextB.setBounds(150, 300, 100, 50);
-		updtateNextB.setRolloverEnabled(true);
-		updtateNextB.setRolloverIcon(updateProfileNextImage);
-		updtateNextB.setPressedIcon(updateProfileNextImage);
-		updtateNextB.addActionListener(new updateProfileNextButton());
-		updtateNextB.setActionCommand("nextToupdateProfile");
-		updateP.add(updtateNextB);
-		updtateNextB.setToolTipText("NEXT");
+		updtateCreateNextB = new JButton(updateProfileNextImage);
+		updtateCreateNextB .setBackground(Color.BLUE);
+		updtateCreateNextB .setBounds(220, 130, 100, 50);
+		updtateCreateNextB .setRolloverEnabled(true);
+		updtateCreateNextB .setRolloverIcon(updateProfileNextImage);
+		updtateCreateNextB .setPressedIcon(updateProfileNextImage);
+		updtateCreateNextB .addActionListener(new updateProfileCreateEventButton());
+		updtateCreateNextB .setActionCommand("nextToUpdateProfileCreateEvent");
+		updateP.add(updtateCreateNextB );
+		updtateCreateNextB.setToolTipText("Create Event");
 
 		//============back to view profile button=================//
 		ImageIcon updateProfileBackImage = new ImageIcon("images/customer_back.GIF");
 		viewBackB = new JButton(updateProfileBackImage);
-		viewBackB.setBackground(Color.CYAN);
-		viewBackB.setBounds(25, 300, 100, 50);
+		viewBackB.setBackground(Color.GREEN);
+		viewBackB.setBounds(350, 275, 100, 50);
 		viewBackB.setRolloverEnabled(true);
 		viewBackB.setRolloverIcon(updateProfileBackImage);
 		viewBackB.setPressedIcon(updateProfileBackImage);
@@ -716,7 +877,28 @@ public class GiftedlView extends JFrame{
 		updateP.add(viewBackB);
 		pane.add(updateP, "updateProfileForm");
 		viewBackB.setToolTipText("BACK");
+		//========================update event button==========================
+		
+		//========== vieProfile buttons==================//
+
+				ImageIcon updateProfileNextImage1 = new ImageIcon("images/create.GIF");
+				updtateNextB = new JButton(updateProfileNextImage1);
+				updtateNextB.setBackground(Color.BLUE);
+				updtateNextB.setBounds(700, 130, 100, 50);
+				updtateNextB.setRolloverEnabled(true);
+				updtateNextB.setRolloverIcon(updateProfileNextImage1);
+				updtateNextB.setPressedIcon(updateProfileNextImage1);
+				updtateNextB.addActionListener(new updateProfileUpdateEventButton());
+				updtateNextB.setActionCommand("nextToUpdateProfileUpdateEvent");
+				updateP.add(updtateNextB);
+				updtateNextB.setToolTipText("Update Event");
+
 		//=============show event and wishlist page===============
+		
+		
+		
+		
+		
 		showEventP = new JPanel(null);
 		showEventP.setBackground(Color.DARK_GRAY);
 
@@ -747,7 +929,7 @@ public class GiftedlView extends JFrame{
 
 		ImageIcon showEventBackImage = new ImageIcon("images/customer_back.GIF");
 		showEventBackB = new JButton(showEventBackImage);
-		showEventBackB.setBackground(Color.CYAN);
+		showEventBackB.setBackground(Color.GREEN);
 		showEventBackB.setBounds(350, 200, 100, 50);
 		showEventBackB.setRolloverEnabled(true);
 		showEventBackB.setRolloverIcon(showEventBackImage);
@@ -825,25 +1007,29 @@ public class GiftedlView extends JFrame{
 					contactChecker.setForeground(Color.GREEN);
 					contactChecker.setText("valid!");
 				}
-				if (socialMediaTF.getText().isEmpty() || !(Pattern.matches("^http.?:\\/\\/.*|HTTP.?:\\/\\/.*",socialMediaTF.getText()))) { // for socialMediaLink
-					socialMediaLinkChecker.setForeground(Color.RED);
-					socialMediaLinkChecker.setText("Invalid!");
-				}
-				else {
-					socialMediaLinkChecker.setForeground(Color.GREEN);
-					socialMediaLinkChecker.setText("valid!");
-				}
-				if(userIDChecker.getText().isEmpty()|| !(Pattern.matches("^[a-zA-Z0-9]+$", userIDTF.getText()))) {
-					userIDChecker.setForeground(Color.RED);
-					userIDChecker.setText("Invalid!");
-				}
-				else
-				{
-					userIDChecker.setForeground(Color.GREEN);
-					userIDChecker.setText("valid!");
-				}
-				if (Pattern.matches("^[a-zA-Z]+$",nameFirstTF.getText()) && Pattern.matches("^[a-zA-Z]+$",lastNameTF.getText()) && (genderTF.getText().equals("M") || genderTF.getText().equals("F")|| genderTF.getText().equals("m")||genderTF.getText().equals("f")) && Pattern.matches("^\\d{10}$", mobileNoTF.getText()) && Pattern.matches("^http.?:\\/\\/.*|HTTP.?:\\/\\/.*",socialMediaTF.getText())&&(Pattern.matches("^[a-zA-Z0-9]+$", userIDTF.getText()))) {
+		
+//				if(userIDChecker.getText().isEmpty()|| !(Pattern.matches("^[a-zA-Z0-9]+$", userIDTF.getText()))) {
+//					userIDChecker.setForeground(Color.RED);
+//					userIDChecker.setText("Invalid!");
+//				}
+//				else
+//				{
+//					userIDChecker.setForeground(Color.GREEN);
+//					userIDChecker.setText("valid!");
+//				}
+				
+//				if(userPWDChecker.getText().isEmpty()|| !(Pattern.matches("^[a-zA-Z0-9]+$", userPWDTF.getPassword()))) {
+//					userPWDChecker.setForeground(Color.RED);
+//					userPWDChecker.setText("Invalid!");
+//				}
+//				else
+//				{
+//					userPWDChecker.setForeground(Color.GREEN);
+//					userPWDChecker.setText("valid!");
+//				}
+				if (Pattern.matches("^[a-zA-Z]+$",nameFirstTF.getText()) && Pattern.matches("^[a-zA-Z]+$",lastNameTF.getText()) && (genderTF.getText().equals("M") || genderTF.getText().equals("F")|| genderTF.getText().equals("m")||genderTF.getText().equals("f")) && Pattern.matches("^\\d{10}$", mobileNoTF.getText())) {
 					cL.show(pane, "createEventForm");
+				
 					String firstNameText = nameFirstTF.getText();
 					String lastNameText = lastNameTF.getText();
 					String genderText = genderTF.getText();
@@ -857,22 +1043,25 @@ public class GiftedlView extends JFrame{
 					String DOBText = year + "-" + monthValue + "-" + date;
 					String socialMediaText = socialMediaTF.getText();
 					String userIDText = String.valueOf(userIDTF.getText());
+					String userIDPWDText = String.valueOf(userPWDTF.getPassword());
+					String eventName="";
 					userProfile.setUserProfile(firstNameText, lastNameText, genderText, mobileNoText, DOBText,
-							socialMediaText, userIDText);
+							socialMediaText, userIDText,userIDPWDText,eventName);
 					socialMediaTF.setText(null);
 					nameFirstTF.setText(null);
 					lastNameTF.setText(null);
 					genderTF.setText(null);
 					mobileNoTF.setText(null);
 					userIDTF.setText(null);
+					userPWDTF.setText(null);
 					try {
 						String url = "jdbc:mysql://localhost:3306/gifted_project";
 						String userName = "root";
 						String password = "root";
 						Connection con = DriverManager.getConnection(url, userName, password);
 						Statement st = con.createStatement();
-						String sql = "INSERT INTO createprofile(userID,firstName,lastName,gender,mobileNumber,DOB,handlerLink) VALUES ('" +userIDText+ "','" + firstNameText + "','" + lastNameText + "','" + genderText + "','" + mobileNoText
-								+ "','" + DOBText + "','" + socialMediaText + "')";
+						String sql = "INSERT INTO createprofile(userID,firstName,lastName,gender,mobileNumber,DOB,handlerLink,userPassword) VALUES ('" +userIDText+ "','" + firstNameText + "','" + lastNameText + "','" + genderText + "','" + mobileNoText
+								+ "','" + DOBText + "','" + socialMediaText + "','"+userIDPWDText+"' )";
 						st.executeUpdate(sql);
 						st.close();
 						con.close();
@@ -889,6 +1078,10 @@ public class GiftedlView extends JFrame{
 		public void actionPerformed(ActionEvent event) {
 			CardLayout cL = (CardLayout) pane.getLayout();
 			if (event.getActionCommand().equals("nextToCreateEvent")) {
+				firstNameChecker.setText(null);
+				lastNameChecker.setText(null);
+				genderChecker.setText(null);
+				contactChecker.setText(null);
 				cL.show(pane, "createWishListForm");
 				try {
 					String url = "jdbc:mysql://localhost:3306/gifted_project";
@@ -987,7 +1180,72 @@ public class GiftedlView extends JFrame{
 
 		} 
 	}
+//================ save wishlist update profile button=======================//
+	private class wishListUpdateSaveButton implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			CardLayout cL = (CardLayout) pane.getLayout();
+			if (event.getActionCommand().equals("saveWishlistUpdateProfile")) {
+				cL.show(pane, "createWishListUpdateForm");
+				String itemText = createItemUpdateTF.getText();
+				String brandText = createBrandUpdateTF.getText();
+				String colorText = createColorUpdateTF.getText();
+				String commentText = createCommentUpdateTF.getText();
+				int priceText=0,priorityText=0;
+				if(!(createPriceTF.getText().equals(""))&&!(createPriorityTF.getText().equals(""))) {
+					priceText = Integer.parseInt(createPriceUpdateTF.getText());
+					priorityText = Integer.parseInt(createPriorityUpdateTF.getText());
+					wishListCreate.setPriority(priorityText);
+					wishListCreate.setPrice(priceText);
+				}
+				wishListCreate.setItem(itemText);
+				wishListCreate.setColor(colorText);
+				wishListCreate.setBrand(brandText);
+				wishListCreate.setComment(commentText);
 
+				createItemUpdateTF.setText(null);
+				createBrandUpdateTF.setText(null);
+				createColorUpdateTF.setText(null);
+				createCommentUpdateTF.setText(null);
+				createPriceUpdateTF.setText(null);
+				createPriorityUpdateTF.setText(null);
+				String userIDText=userProfile.getLoginUID();
+				
+				String eventNameText=userProfile.getEventName();
+				//String userIDText=userProfile.getUserID();
+				try {
+					String url = "jdbc:mysql://localhost:3306/gifted_project";
+					String userName = "root";
+					String password = "root";
+
+					Connection con = DriverManager.getConnection(url, userName, password);
+					Statement st = con.createStatement();
+					String sql= "select createprofile_ID from createprofile where userId='"+userIDText+"'";
+					ResultSet rs =st.executeQuery(sql);
+					int createprofile_IDText=0,createEventIDText=0;
+					while(rs.next()){
+						createprofile_IDText=rs.getInt("createprofile_ID");
+					}
+				//	
+					//System.out.println(eventNameText);
+					String sqlProfile= "select eventID from createevent where eventName='"+eventNameText+"'";
+					ResultSet profileID =st.executeQuery(sqlProfile);
+					while(profileID.next()) {
+						createEventIDText=profileID.getInt("eventID");
+					}
+					//System.out.println("eventID");
+					String sqlWishlist = "INSERT INTO createwishlist(createprofile_ID,eventID,itemName,brand,color,commentItem,price,priority) VALUES ('"+createprofile_IDText+"','"+createEventIDText+"', '"+itemText+ "','" + brandText + "','" + colorText + "','" + commentText +"','" + priceText + "','"+ priorityText+" ')";
+					st.executeUpdate(sqlWishlist);
+					st.close();
+					con.close();
+				} catch (Exception e) {
+					System.out.println(e);
+					//	e.printStackTrace();
+					//System.out.println("error2");
+				}
+			}
+
+		} 
+	}
 
 	// login button
 	private class loginNextButton implements ActionListener {
@@ -1033,6 +1291,7 @@ public class GiftedlView extends JFrame{
 			CardLayout cL = (CardLayout) pane.getLayout();
 
 			if (event.getActionCommand().equals("backToLogin")) {
+				loginUserIDChecker.setText(null);
 				cL.show(pane, "welcomeForm");
 			}
 		}
@@ -1089,33 +1348,36 @@ public class GiftedlView extends JFrame{
 
 
 	////////////////// view Profile next buttons---------------------
-	private class updateProfileNextButton implements ActionListener {
+	private class updateProfileCreateEventButton implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			CardLayout cL = (CardLayout) pane.getLayout();
 			String userLoginIDText=userProfile.getLoginUID();
-			String selectedEventText=String.valueOf(sECB.getSelectedItem());
-			if (event.getActionCommand().equals("nextToupdateProfile")) {
+			String selectedEventText=String.valueOf(cUECB.getSelectedItem());
+			userProfile.setLoginUserID(userLoginIDText);
+			userProfile.setEventName(selectedEventText);
+			if (event.getActionCommand().equals("nextToUpdateProfileCreateEvent")) {
 
 				try {
 					String url = "jdbc:mysql://localhost:3306/gifted_project";
 					String userName = "root";
 					String password = "root";
-					String eventNameText=null;
 					Connection con = DriverManager.getConnection(url, userName, password);
 					Statement st = con.createStatement();
-					String sql= "select distinct e.eventName from createprofile a inner join createwishlist b on a.createprofile_ID=b.createprofile_ID join createevent e on b.eventID=e.eventID where a.userID='"+userLoginIDText
-							+"'";
-
+					String sql= "select userID,createprofile_ID from createprofile where userId='"+userLoginIDText+"'";
 					ResultSet rs =st.executeQuery(sql);
+					String viewUserIDValue=" ";
+					String createProfileIDText=null;
 					while(rs.next()){
-						eventNameText=rs.getString("eventName");
+						viewUserIDValue=rs.getString("userID");
+						createProfileIDText=rs.getString("createprofile_ID");
 						}
-					if(!(eventNameText.equals(selectedEventText))) {
-						eventNameChecker.setForeground(Color.RED);
-						eventNameChecker.setText(selectedEventText +" is not created");
+					if(!(viewUserIDValue.equals(userLoginIDText))) {
+						viewLoginUserIDChecker.setForeground(Color.RED);
+						viewLoginUserIDChecker.setText("UserID is Invalid!");		
 					}
+					
 					else {
-						cL.show(pane, "showEventForm");
+						cL.show(pane, "createWishListUpdateProfileForm");
 					}
 					st.close();
 					con.close();
@@ -1128,13 +1390,64 @@ public class GiftedlView extends JFrame{
 
 		}
 	}
+	private class updateProfileUpdateEventButton implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			CardLayout cL = (CardLayout) pane.getLayout();
+			String userLoginIDText=userProfile.getLoginUID();
+			String selectedEventText=String.valueOf(sECB.getSelectedItem());
+			userProfile.setLoginUserID(userLoginIDText);
+			userProfile.setUpdateEventName(selectedEventText);
+			System.out.println("user id value from frontend"+ userLoginIDText);
+			if (event.getActionCommand().equals("nextToUpdateProfileUpdateEvent")) {
 
+				try {
+					String url = "jdbc:mysql://localhost:3306/gifted_project";
+					String userName = "root";
+					String password = "root";
+					Connection con = DriverManager.getConnection(url, userName, password);
+					Statement st = con.createStatement();
+					String sql= "select c.userID from createprofile c"
+							+" join createwishlist w"
+							+" on c.createprofile_ID=w.createprofile_ID"
+							+" join createevent e"
+							+" on w.eventID=e.eventID"
+							+" where c.userID= '"+userLoginIDText+"' and"
+							+" e.eventName='"+selectedEventText+"'";
+					ResultSet rs =st.executeQuery(sql);
+					String userIDValue="";
+					String createProfileIDValue=null;
+						while(rs.next()){
+						userIDValue=rs.getString("userID");
+									}
+				
+					System.out.println("user id value from database"+ userIDValue);
+					if(!(userIDValue.equals(userLoginIDText))) {
+						eventNameChecker.setForeground(Color.RED);
+						eventNameChecker.setText(selectedEventText+ " is not created, please use create new event");		
+					}
+					
+					else {
+						cL.show(pane, "createWishListUpdateProfileForm");
+					}
+					st.close();
+					con.close();
+					//eventNameChecker.setText(null);
+				}catch (Exception e) {
+					 JOptionPane.showMessageDialog(null, "SQLException:\n" + e, "Error: login(wrong data)", JOptionPane.ERROR_MESSAGE);
+				}
+
+
+			}
+
+		}
+	}
 
 	private class updateProfileBackButton implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			CardLayout cL = (CardLayout) pane.getLayout();
 
 			if (event.getActionCommand().equals("backToupdateProfile")) {
+				eventNameChecker.setText(null);
 				cL.show(pane, "updateLoginForm");
 			}
 		}
@@ -1146,6 +1459,10 @@ public class GiftedlView extends JFrame{
 			CardLayout cL = (CardLayout) pane.getLayout();
 
 			if (event.getActionCommand().equals("backToWelcomeForm")) {
+				firstNameChecker.setText(null);
+				lastNameChecker.setText(null);
+				genderChecker.setText(null);
+				contactChecker.setText(null);
 				cL.show(pane, "welcomeForm");
 			}
 		}
@@ -1183,11 +1500,15 @@ public class GiftedlView extends JFrame{
 			}
 		}
 	}
-	//	private void printstack(Exception e) {
-	//		// TODO Auto-generated method stub
-	//		
-	//
-	//	}
+	private class createWishListUpdateBackButton implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			CardLayout cL = (CardLayout) pane.getLayout();
+
+			if (event.getActionCommand().equals("backToCreateEvent")) {
+				cL.show(pane, "updateProfileForm");
+			}
+		}
+	}
 
 	private void connectDatabase() {
 		try {
