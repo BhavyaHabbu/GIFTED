@@ -4,7 +4,7 @@ import java.io.*;
 /////////////////////////////////////////////Car class/////////////////////////////////////
 public class UserProfile {
 
-	private String firstName,lastName,gender,socialMediaLink,birthDate,mobileNo,friendFirstName,friendLastName,friendMobileNo,userID,loginUID,viewLoginUID,password,eventName;
+	private String firstName,lastName,gender,socialMediaLink,birthDate,mobileNo,friendFirstName,friendLastName,friendMobileNo,userID,loginUID,viewLoginUID,password,eventName,loginPWD;
 
 	
 	
@@ -22,6 +22,7 @@ public class UserProfile {
 		loginUID="";
 		password="";
 		eventName="";
+		loginPWD="";
 		
 	}
 	
@@ -71,6 +72,12 @@ public class UserProfile {
 	}
 	public void setLoginUserID(String lUID) {
 		loginUID=lUID;
+	}
+	public void setLoginPWD(String lPWDUID) {
+		loginPWD=lPWDUID;
+	}
+	public String getLoginPassword() {
+		return loginPWD;
 	}
 		
 	public String getFirstName() {
