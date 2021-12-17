@@ -1,17 +1,21 @@
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
-
 import java.awt.event.*;
 import java.io.*;
-import java.sql.*; 
+import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 import java.util.*;
 import java.util.regex.Pattern;
 
+//import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class GiftedlView extends JFrame{
 
@@ -46,17 +50,6 @@ public class GiftedlView extends JFrame{
 	private JTextField createItemTF, createBrandTF, createColorTF, createCommentTF, createPriceTF, createPriorityTF;
 	private JButton createWishListBackB, showEventBackB;
 	private JTextArea carDetailsTA;
-	
-	
-	
-	
-	private String loggedInUserID;
-	private JPanel userProfilePanel, searchFriendPanel, searchedUserPanel, loginFormP, viewFriendListPanel, friendsPanel, viewWishListPanel, wishListPanel;
-	private JButton searchFriend,viewFriends, viewWishlistBtn, searchFriendDB, addWishlist, viewWishlist, signInB, friendListBackProfile, profileToMainBackBtn;
-	private JLabel userWelcomeMsg, wishlistHeaderLabel, searchFrienddFirstName, noUserFoundLabel, 
-	searchFrienddlastName, loginUserPasswordL, loginError, addFriendImageLabel, friendListImageLabel, wishListImageLabel;
-	private JTextField searchFrienddFirstNameTF, searchFrienddlastNameTF, loginUsernameTF, loginUserPasswordTF;
-	
 
 
 	public GiftedlView()  {
@@ -137,7 +130,7 @@ public class GiftedlView extends JFrame{
 		mainNextU.setRolloverEnabled(true);
 		mainNextU.setRolloverIcon(mainNextImage2);
 		mainNextU.setPressedIcon(mainNextImage2);
-		mainNextU.setActionCommand("userLoginForm");
+		mainNextU.setActionCommand("nextToupdateProfile");
 		mainP.add(mainNextU);
 		pane.add(mainP, "welcomeForm");
 		//=========== Create profile information-2nd Page===============//
@@ -387,9 +380,12 @@ public class GiftedlView extends JFrame{
 		cECB=new JComboBox(createEventCB);
 		cECB.setBounds(550, 90, 250, 30);
 		try {
-			Connection con = DBUtils.getConnection();
-			Statement st = con.createStatement();
+			String url = "jdbc:mysql://localhost:3306/gifted_project";
+			String userName = "root";
+			String password = "root";
 			String sql= "select eventName from createevent";
+			Connection con = DriverManager.getConnection(url, userName, password);
+			Statement st = con.createStatement();
 			ResultSet rs =st.executeQuery(sql);
 			while(rs.next()) {
 				String eventNameText=rs.getString("eventName");
@@ -802,9 +798,12 @@ public class GiftedlView extends JFrame{
 		sECB=new JComboBox(showEventCB);
 		sECB.setBounds(500, 140, 125, 30);
 		try {
-			Connection con = DBUtils.getConnection();
-			Statement st = con.createStatement();
+			String url = "jdbc:mysql://localhost:3306/gifted_project";
+			String userName = "root";
+			String password = "root";
 			String sql= "select eventName from createevent";
+			Connection con = DriverManager.getConnection(url, userName, password);
+			Statement st = con.createStatement();
 			ResultSet rs =st.executeQuery(sql);
 			while(rs.next()) {
 				String eventNameUpdateText=rs.getString("eventName");
@@ -813,7 +812,6 @@ public class GiftedlView extends JFrame{
 			st.close();
 			con.close();
 		}catch (Exception e) {
-			e.printStackTrace();
 		}
 		updateP.add(sECB);
 		eventNameChecker=new JLabel("");
@@ -831,9 +829,12 @@ public class GiftedlView extends JFrame{
 		cUECB=new JComboBox(createEventUpdateCB );
 		cUECB.setBounds(45, 140, 125, 30);
 		try {
-			Connection con = DBUtils.getConnection();
-			Statement st = con.createStatement();
+			String url = "jdbc:mysql://localhost:3306/gifted_project";
+			String userName = "root";
+			String password = "root";
 			String sql= "select eventName from createevent";
+			Connection con = DriverManager.getConnection(url, userName, password);
+			Statement st = con.createStatement();
 			ResultSet rs =st.executeQuery(sql);
 			while(rs.next()) {
 				String eventNameUpdateText=rs.getString("eventName");
@@ -842,7 +843,6 @@ public class GiftedlView extends JFrame{
 			st.close();
 			con.close();
 		}catch (Exception e) {
-			e.printStackTrace();
 		}
 
 
@@ -865,31 +865,18 @@ public class GiftedlView extends JFrame{
 		updtateCreateNextB.setToolTipText("Create Event");
 
 		//============back to view profile button=================//
-		
-		addSearchFriendButton(updateP);
-		addViewFriendButton(updateP);
-		addViewWishListButton(updateP);
-		
 		ImageIcon updateProfileBackImage = new ImageIcon("images/customer_back.GIF");
 		viewBackB = new JButton(updateProfileBackImage);
 		viewBackB.setBackground(Color.GREEN);
-		viewBackB.setBounds(350, 375, 100, 50);
+		viewBackB.setBounds(350, 275, 100, 50);
 		viewBackB.setRolloverEnabled(true);
 		viewBackB.setRolloverIcon(updateProfileBackImage);
 		viewBackB.setPressedIcon(updateProfileBackImage);
-		viewBackB.addActionListener(new createBackButton());
-		viewBackB.setActionCommand("backToWelcomeForm");
-		viewBackB.setToolTipText("BACK");
+		viewBackB.addActionListener(new updateProfileBackButton());
+		viewBackB.setActionCommand("backToupdateProfile");
 		updateP.add(viewBackB);
-		
 		pane.add(updateP, "updateProfileForm");
-		
-		
-		
-		
-		
-		
-		
+		viewBackB.setToolTipText("BACK");
 		//========================update event button==========================
 		
 		//========== vieProfile buttons==================//
@@ -952,525 +939,7 @@ public class GiftedlView extends JFrame{
 		showEventP.add(showEventBackB);
 		pane.add(showEventP, "showEventForm");
 		showEventBackB.setToolTipText("BACK");
-		
-		
-		//Shruti Code Starts
-		loginForm();
-		userProfile();
-		searchFriend();
-		friendList();
-		wishList();
 	}
-
-	private void wishList() {
-		
-		
-		viewWishListPanel = new JPanel(null);
-		viewWishListPanel.setBackground(Color.DARK_GRAY);
-		
-		ImageIcon createImage1 = new ImageIcon("images/friendCreate.JPG");
-		// Image background = Toolkit.getDefaultToolkit().createImage("Background.png");
-		wishListImageLabel = new JLabel(createImage1);
-		wishListImageLabel.setBounds(520, 0, 500, 600);
-		viewWishListPanel.add(wishListImageLabel);
-		
-		wishlistHeaderLabel = new JLabel("View Wish List");
-		wishlistHeaderLabel.setFont(new Font("Serif", Font.BOLD, 23));
-		wishlistHeaderLabel.setForeground(Color.CYAN);
-		wishlistHeaderLabel.setBounds(50, 5, 250, 100);
-		viewWishListPanel.add(wishlistHeaderLabel);
-		
-		
-		wishListPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		wishListPanel.setBounds(50, 100, 400, 400);
-		wishListPanel.setBackground(Color.DARK_GRAY);
-		wishListPanel.setLayout(new GridLayout(10, 1, 10, 10));
-		viewWishListPanel.add(wishListPanel);
-		
-		
-		ImageIcon showEventBackImage = new ImageIcon("images/customer_back.GIF");
-		friendListBackProfile = new JButton(showEventBackImage);
-		friendListBackProfile.setBackground(Color.GREEN);
-		friendListBackProfile.setBounds(250, 500, 100, 50);
-		friendListBackProfile.addActionListener(new mainNextButton());
-		friendListBackProfile.setActionCommand("backToProfile");
-		friendListBackProfile.setToolTipText("BACK");
-		viewWishListPanel.add(friendListBackProfile);
-		
-		
-		pane.add(viewWishListPanel, "viewWishListPanel");
-	}
-
-	private void friendList() {
-		
-		viewFriendListPanel = new JPanel(null);
-		viewFriendListPanel.setBackground(Color.DARK_GRAY);
-		
-		ImageIcon createImage1 = new ImageIcon("images/friendCreate.JPG");
-		// Image background = Toolkit.getDefaultToolkit().createImage("Background.png");
-		friendListImageLabel = new JLabel(createImage1);
-		friendListImageLabel.setBounds(520, 0, 500, 600);
-		viewFriendListPanel.add(friendListImageLabel);
-		
-		userWelcomeMsg = new JLabel("View Friend List");
-		userWelcomeMsg.setFont(new Font("Serif", Font.BOLD, 23));
-		userWelcomeMsg.setForeground(Color.CYAN);
-		userWelcomeMsg.setBounds(50, 5, 250, 100);
-		viewFriendListPanel.add(userWelcomeMsg);
-		
-		
-		friendsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		friendsPanel.setBounds(50, 100, 400, 400);
-		friendsPanel.setBackground(Color.DARK_GRAY);
-		friendsPanel.setLayout(new GridLayout(10, 1, 10, 10));
-		viewFriendListPanel.add(friendsPanel);
-		
-		
-		ImageIcon showEventBackImage = new ImageIcon("images/customer_back.GIF");
-		friendListBackProfile = new JButton(showEventBackImage);
-		friendListBackProfile.setBackground(Color.GREEN);
-		friendListBackProfile.setBounds(250, 500, 100, 50);
-		friendListBackProfile.addActionListener(new mainNextButton());
-		friendListBackProfile.setActionCommand("backToProfile");
-		friendListBackProfile.setToolTipText("BACK");
-		viewFriendListPanel.add(friendListBackProfile);
-		
-		
-		pane.add(viewFriendListPanel, "viewFriendListPanel");
-			
-		
-	}
-
-
-
-	private void loginForm() {
-		loginFormP = new JPanel(null);
-		loginFormP.setBackground(Color.DARK_GRAY);
-
-		loginUsernameL = new JLabel("Username :");
-		loginUsernameL.setFont(new Font("Verdana", Font.BOLD, 15));
-		loginUsernameL.setForeground(Color.CYAN);
-		loginUsernameL.setBounds(50, 1, 250, 100);
-		loginFormP.add(loginUsernameL);
-
-		loginUserPasswordL = new JLabel("Password:");
-		loginUserPasswordL.setFont(new Font("Verdana", Font.BOLD, 15));
-		loginUserPasswordL.setForeground(Color.CYAN);
-		loginUserPasswordL.setBounds(50, 50, 250, 100);
-		loginFormP.add(loginUserPasswordL);
-
-		loginUsernameTF = new JTextField(""); // set as 10 ha
-		loginUsernameTF.setHorizontalAlignment(JTextField.CENTER);
-		loginUsernameTF.setForeground(Color.GRAY);
-		loginUsernameTF.setBounds(300, 40, 250, 30);
-		loginFormP.add(loginUsernameTF);
-
-		loginUserPasswordTF = new JTextField(""); // set as 10 ha
-		loginUserPasswordTF.setHorizontalAlignment(JTextField.CENTER);
-		loginUserPasswordTF.setForeground(Color.GRAY);
-		loginUserPasswordTF.setBounds(300, 90, 250, 30);
-		loginFormP.add(loginUserPasswordTF);
-		
-		
-		loginError = new JLabel("");
-		loginError.setFont(new Font("Serif", Font.BOLD, 14));
-		loginError.setBounds(50, 100, 250, 100);
-		loginFormP.add(loginError);
-		
-		
-		
-		ImageIcon loginBackImage1 = new ImageIcon("images/next.GIF");
-		signInB = new JButton(loginBackImage1);
-		signInB.setBackground(Color.CYAN);
-		signInB.setBounds(350, 200, 100, 50);
-		signInB.setRolloverEnabled(true);
-		signInB.setRolloverIcon(loginBackImage1);
-		signInB.setPressedIcon(loginBackImage1);
-		signInB.addActionListener(new validateLoginButton());
-		signInB.setActionCommand("backToLogin");
-		loginFormP.add(signInB);
-		
-		
-		
-		
-		ImageIcon loginBackImage2 = new ImageIcon("images/back.GIF");
-		profileToMainBackBtn = new JButton(loginBackImage2);
-		profileToMainBackBtn.setBackground(Color.CYAN);
-		profileToMainBackBtn.setBounds(250, 200, 100, 50);
-		profileToMainBackBtn.setRolloverEnabled(true);
-		profileToMainBackBtn.setRolloverIcon(loginBackImage2);
-		profileToMainBackBtn.setPressedIcon(loginBackImage2);
-		profileToMainBackBtn.addActionListener(new createBackButton());
-		profileToMainBackBtn.setActionCommand("backToWelcomeForm");
-		loginFormP.add(profileToMainBackBtn);
-		pane.add(loginFormP, "userLoginForm");
-		
-	}
-
-	private void addSearchFriendButton(JPanel updateP) {
-		System.out.println("inside addSearchFriendButton");
-		ImageIcon image = new ImageIcon("images/add_friend_1.png");
-		searchFriend = new JButton(image);
-		searchFriend.setBackground(Color.GREEN);
-		searchFriend.setBounds(100, 225, 250, 100);
-		searchFriend.setRolloverEnabled(true);
-		searchFriend.setRolloverIcon(image);
-		searchFriend.setPressedIcon(image);
-		searchFriend.addActionListener(new SearchFriendsButton());
-		searchFriend.setActionCommand("nextToCreateLogin");
-		searchFriend.setToolTipText("Search friend");
-		updateP.add(searchFriend);
-	}
-	
-	private void addViewFriendButton(JPanel updateP) {
-		System.out.println("inside addSearchFriendButton");
-		ImageIcon image = new ImageIcon("images/friend_list_1.png");
-		viewFriends = new JButton(image);
-		viewFriends.setBackground(Color.GREEN);
-		viewFriends.setBounds(350, 225, 250, 100);
-		viewFriends.setRolloverEnabled(true);
-		viewFriends.setRolloverIcon(image);
-		viewFriends.setPressedIcon(image);
-		viewFriends.addActionListener(new ViewFriendListButton());
-		viewFriends.setActionCommand("viewFriendList");
-		viewFriends.setToolTipText("View friend");
-		updateP.add(viewFriends);
-	}
-	
-	private void addViewWishListButton(JPanel updateP) {
-		System.out.println("inside addSearchFriendButton");
-		ImageIcon image = new ImageIcon("images/wish_list_1.png");
-		viewWishlistBtn = new JButton(image);
-		viewWishlistBtn.setBackground(Color.GREEN);
-		viewWishlistBtn.setBounds(600, 225, 250, 100);
-		viewWishlistBtn.setRolloverEnabled(true);
-		viewWishlistBtn.setRolloverIcon(image);
-		viewWishlistBtn.setPressedIcon(image);
-		viewWishlistBtn.addActionListener(new ViewWishListButton());
-		viewWishlistBtn.setActionCommand("viewFriendList");
-		viewWishlistBtn.setToolTipText("View Wishlist");
-		updateP.add(viewWishlistBtn);
-	}
-	
-	private void searchFriend() {
-		searchFriendPanel = new JPanel(null);
-		searchFriendPanel.setBackground(Color.DARK_GRAY);
-		
-		ImageIcon createImage1 = new ImageIcon("images/friendCreate.JPG");
-		// Image background = Toolkit.getDefaultToolkit().createImage("Background.png");
-		addFriendImageLabel = new JLabel(createImage1);
-		addFriendImageLabel.setBounds(520, 0, 500, 600);
-		searchFriendPanel.add(addFriendImageLabel);
-		
-		userWelcomeMsg = new JLabel("Search friends to add");
-		userWelcomeMsg.setFont(new Font("Serif", Font.BOLD, 23));
-		userWelcomeMsg.setForeground(Color.CYAN);
-		userWelcomeMsg.setBounds(50, 5, 250, 100);
-		searchFriendPanel.add(userWelcomeMsg);
-		
-		
-		searchFrienddFirstName = new JLabel("First Name:");
-		searchFrienddFirstName.setFont(new Font("Verdana", Font.BOLD, 15));
-		searchFrienddFirstName.setForeground(Color.CYAN);
-		searchFrienddFirstName.setBounds(50, 50, 250, 100);
-		searchFriendPanel.add(searchFrienddFirstName);
-
-		searchFrienddlastName = new JLabel("Last Name:");
-		searchFrienddlastName.setFont(new Font("Verdana", Font.BOLD, 15));
-		searchFrienddlastName.setForeground(Color.CYAN);
-		searchFrienddlastName.setBounds(50, 100, 250, 100);
-		searchFriendPanel.add(searchFrienddlastName);
-		
-		
-		searchFrienddFirstNameTF = new JTextField("");
-		searchFrienddFirstNameTF.setVisible(true);
-		searchFrienddFirstNameTF.setToolTipText("Enter firstname");
-		searchFrienddFirstNameTF.setHorizontalAlignment(JTextField.CENTER);
-		searchFrienddFirstNameTF.setForeground(Color.GRAY);
-		searchFrienddFirstNameTF.setBounds(200, 90, 250, 30);
-		searchFriendPanel.add(searchFrienddFirstNameTF);
-
-		searchFrienddlastNameTF = new JTextField("");
-		searchFrienddlastNameTF.setVisible(true);
-		searchFrienddlastNameTF.setToolTipText("Enter lastname");
-		searchFrienddlastNameTF.setHorizontalAlignment(JTextField.CENTER);
-		searchFrienddlastNameTF.setForeground(Color.GRAY);
-		searchFrienddlastNameTF.setBounds(200, 140, 250, 30);
-		searchFriendPanel.add(searchFrienddlastNameTF);
-		
-		ImageIcon updateProfileBackImage = new ImageIcon("images/create.GIF");
-		searchFriendDB = new JButton(updateProfileBackImage);
-		searchFriendDB.setBackground(Color.GREEN);
-		searchFriendDB.setBounds(250, 200, 100, 50);
-		searchFriendDB.setRolloverEnabled(true);
-		searchFriendDB.setRolloverIcon(updateProfileBackImage);
-		searchFriendDB.setPressedIcon(updateProfileBackImage);
-		searchFriendDB.addActionListener(new GetUsersFromDBButton());
-		searchFriendDB.setActionCommand("getUsersFromDB");
-		searchFriendDB.setToolTipText("Search Friends");
-		searchFriendPanel.add(searchFriendDB);
-		
-		
-		ImageIcon showEventBackImage = new ImageIcon("images/customer_back.GIF");
-		friendListBackProfile = new JButton(showEventBackImage);
-		friendListBackProfile.setBackground(Color.GREEN);
-		friendListBackProfile.setBounds(150, 200, 100, 50);
-		friendListBackProfile.addActionListener(new mainNextButton());
-		friendListBackProfile.setActionCommand("backToProfile");
-		friendListBackProfile.setToolTipText("BACK");
-		searchFriendPanel.add(friendListBackProfile);
-		
-		
-		searchedUserPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		searchedUserPanel.setBounds(50, 300, 400, 600);
-		searchedUserPanel.setBackground(Color.DARK_GRAY);
-		searchedUserPanel.setLayout(new GridLayout(10, 1, 10, 10));
-		searchFriendPanel.add(searchedUserPanel);
-
-		
-		pane.add(searchFriendPanel, "searchFriendPanel");
-		
-	}
-
-	private void userProfile() {
-		userProfilePanel = new JPanel(null);
-		loginP.setBackground(Color.DARK_GRAY);
-		
-		userWelcomeMsg = new JLabel("Welcome "+loggedInUserID);
-		userWelcomeMsg.setFont(new Font("Serif", Font.BOLD, 23));
-		userWelcomeMsg.setForeground(Color.CYAN);
-		userWelcomeMsg.setBounds(50, 5, 250, 100);
-		userProfilePanel.add(userWelcomeMsg);
-
-		
-		//===========Login page next button=============//
-		ImageIcon loginNextImage = new ImageIcon("images/create.GIF");
-		searchFriend = new JButton(loginNextImage);
-		searchFriend.setBackground(Color.GREEN);
-		searchFriend.setBounds(50, 100, 250, 100);
-		searchFriend.setRolloverEnabled(true);
-		searchFriend.setRolloverIcon(loginNextImage);
-		searchFriend.setPressedIcon(loginNextImage);
-		searchFriend.addActionListener(new SearchFriendsButton());
-		searchFriend.setActionCommand("nextToCreateLogin");
-		searchFriend.setToolTipText("NEXT");
-		userProfilePanel.add(searchFriend);
-		
-		addWishlist = new JButton(loginNextImage);
-		addWishlist.setBackground(Color.GREEN);
-		addWishlist.setBounds(350, 100, 250, 100);
-		addWishlist.setRolloverEnabled(true);
-		addWishlist.setRolloverIcon(loginNextImage);
-		addWishlist.setPressedIcon(loginNextImage);
-		addWishlist.addActionListener(new SearchFriendsButton());
-		addWishlist.setActionCommand("nextToCreateLogin");
-		addWishlist.setToolTipText("NEXT");
-		userProfilePanel.add(addWishlist);
-		
-		viewWishlist = new JButton(loginNextImage);
-		viewWishlist.setBackground(Color.GREEN);
-		viewWishlist.setBounds(650, 100, 250, 100);
-		viewWishlist.setRolloverEnabled(true);
-		viewWishlist.setRolloverIcon(loginNextImage);
-		viewWishlist.setPressedIcon(loginNextImage);
-		viewWishlist.addActionListener(new SearchFriendsButton());
-		viewWishlist.setActionCommand("nextToCreateLogin");
-		viewWishlist.setToolTipText("NEXT");
-		userProfilePanel.add(viewWishlist);
-		
-		pane.add(userProfilePanel, "userProfilePanel");
-		
-		
-	}
-	
-	
-	private class validateLoginButton implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			CardLayout cL = (CardLayout) pane.getLayout();
-			pane.getComponents();
-
-			String username = loginUsernameTF.getText();
-			String passwrd = loginUserPasswordTF.getText(); 
-			
-			Boolean valid = DBUtils.validateLogin(username, passwrd);
-			if(valid) {
-				cL.show(pane, "updateProfileForm");
-				userProfile.setLoginUserID(username);
-				System.out.println(username+" logged in.. ");
-			} else {
-				loginError.setForeground(Color.RED);
-				loginError.setText("Invalid Username/Password!");
-				System.out.println(username+" login failed.. ");
-			}
-			System.out.println(username+" "+ passwrd);
-		}
-	}
-	
-	
-	private class ViewFriendListButton implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			CardLayout cL = (CardLayout) pane.getLayout();
-			cL.show(pane, "viewFriendListPanel");
-			
-			ResultSet rs = DBUtils.getAllFriends(userProfile.getLoginUID());
-			try {
-				Border blackline = BorderFactory.createLineBorder(Color.black);
-				friendsPanel.removeAll();
-				while (rs.next()) {
-					String userid= rs.getString(1);
-					String fName = rs.getString(3);
-					String lName = rs.getString(4);
-					System.out.println(fName+" "+lName+" "+userid);
-				
-					JPanel panel1 = new JPanel(new BorderLayout());
-					panel1.setBorder(blackline);
-					
-					JPanel namePanel = new JPanel();
-					JLabel userNameLable = new JLabel();
-					userNameLable.setText(fName+" "+lName);
-					userNameLable.setFont(new Font("Serif", Font.PLAIN, 15));
-					userNameLable.setForeground(Color.BLACK);
-					namePanel.add(userNameLable);
-					
-					panel1.add(namePanel, BorderLayout.WEST);
-					
-					friendsPanel.add( panel1 );
-					friendsPanel.revalidate();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	
-	private class ViewWishListButton implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			CardLayout cL = (CardLayout) pane.getLayout();
-			cL.show(pane, "viewWishListPanel");
-			
-			ResultSet rs = DBUtils.getUserWishList(userProfile.getLoginUID());
-			try {
-				Border blackline = BorderFactory.createLineBorder(Color.black);
-				wishListPanel.removeAll();
-				while (rs.next()) {
-					//itemName, brand, color , commentItem, price, priority
-					String itemName= rs.getString(1);
-					String brand = rs.getString(2);
-					String color = rs.getString(3);
-					String commentItem = rs.getString(4);
-					String price = rs.getString(5);
-					String priority = rs.getString(6);
-				
-					JPanel panel1 = new JPanel(new BorderLayout());
-					panel1.setBorder(blackline);
-					
-					JPanel namePanel = new JPanel();
-					JLabel userNameLable = new JLabel();
-					userNameLable.setText("<html> Item Name : "+itemName+"<br> Brand : "+brand+"<br>Color : "+color+""
-							+ "<br>Price : "+price+"<br>Priority : "+priority+"</html>");
-					userNameLable.setFont(new Font("Serif", Font.PLAIN, 15));
-					userNameLable.setForeground(Color.BLACK);
-					userNameLable.setPreferredSize(new Dimension(250, 100));
-					namePanel.add(userNameLable);
-					
-					panel1.add(namePanel, BorderLayout.WEST);
-					
-					wishListPanel.add( panel1 );
-					wishListPanel.revalidate();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	
-	private class SearchFriendsButton implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			CardLayout cL = (CardLayout) pane.getLayout();
-			cL.show(pane, "searchFriendPanel");
-		}
-	}
-	
-	
-	private class GetUsersFromDBButton implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			CardLayout cL = (CardLayout) pane.getLayout();
-			String firstName = searchFrienddFirstNameTF.getText();
-			String lastName = searchFrienddlastNameTF.getText();
-			System.out.println(firstName+" : "+lastName);
-			ResultSet rs = DBUtils.searchUsersByName(userProfile.getLoginUID(), firstName, lastName);
-			try {
-				Border blackline = BorderFactory.createLineBorder(Color.black);
-				int usersCount = 0;
-				searchedUserPanel.removeAll();
-				while (rs.next()) {
-					String userid= rs.getString(1);
-					String fName = rs.getString(3);
-					String lName = rs.getString(4);
-					System.out.println(fName+" "+lName+" "+userid);
-				
-					JPanel panel1 = new JPanel(new BorderLayout());
-					panel1.setBorder(blackline);
-					
-					JPanel namePanel = new JPanel();
-					JLabel userNameLable = new JLabel();
-					userNameLable.setText(fName+" "+lName);
-					userNameLable.setForeground(Color.BLACK);
-					namePanel.add(userNameLable);
-					
-					
-					JPanel buttonPanel = new JPanel();
-					JButton addFriendBtn = new JButton("Add friend");
-					addFriendBtn.setBackground(Color.GREEN);
-					addFriendBtn.addActionListener(new AddFriendButton(userid));
-					addFriendBtn.setToolTipText("Add friend");
-					buttonPanel.add(addFriendBtn);
-					
-					panel1.add(namePanel, BorderLayout.WEST);
-					panel1.add(buttonPanel, BorderLayout.EAST);
-					
-					searchedUserPanel.add( panel1 );
-					searchedUserPanel.revalidate();
-					usersCount++;
-				}
-				if(usersCount == 0) {
-					noUserFoundLabel = new JLabel("No User Found...");
-					noUserFoundLabel.setFont(new Font("Verdana", Font.BOLD, 15));
-					noUserFoundLabel.setForeground(Color.RED);
-					noUserFoundLabel.setBounds(50, 50, 250, 100);
-					searchedUserPanel.add(noUserFoundLabel);
-					searchedUserPanel.revalidate();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-		}
-	}
-	
-	private class AddFriendButton implements ActionListener {
-
-		private String userid = null;
-		public AddFriendButton(String userid) {
-			this.userid = userid;
-			
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String userIDText=userProfile.getLoginUID();
-			System.out.println("Friend Added "+this.userid+" : "+userIDText);
-			DBUtils.addFriends(userProfile.getLoginUID(), this.userid);	
-		}
-	}
-	
-	
 
 
 
@@ -1489,13 +958,6 @@ public class GiftedlView extends JFrame{
 			if (event.getActionCommand().equals("nextToViewProfile")) {
 				cL.show(pane, "viewLoginForm");
 			}
-			if (event.getActionCommand().equals("userLoginForm")) {
-				cL.show(pane, "userLoginForm");
-			}
-			if(event.getActionCommand().equals("backToProfile")) {
-				cL.show(pane, "updateProfileForm");
-			}
-			
 		}
 	}
 
@@ -1593,7 +1055,10 @@ public class GiftedlView extends JFrame{
 					userIDTF.setText(null);
 					userPWDTF.setText(null);
 					try {
-						Connection con = DBUtils.getConnection();
+						String url = "jdbc:mysql://localhost:3306/gifted_project";
+						String userName = "root";
+						String password = "root";
+						Connection con = DriverManager.getConnection(url, userName, password);
 						Statement st = con.createStatement();
 						String sql = "INSERT INTO createprofile(userID,firstName,lastName,gender,mobileNumber,DOB,handlerLink,userPassword) VALUES ('" +userIDText+ "','" + firstNameText + "','" + lastNameText + "','" + genderText + "','" + mobileNoText
 								+ "','" + DOBText + "','" + socialMediaText + "','"+userIDPWDText+"' )";
@@ -1601,7 +1066,7 @@ public class GiftedlView extends JFrame{
 						st.close();
 						con.close();
 					} catch (Exception e) {
-						e.printStackTrace();
+
 					}
 				}
 
@@ -1619,7 +1084,9 @@ public class GiftedlView extends JFrame{
 				contactChecker.setText(null);
 				cL.show(pane, "createWishListForm");
 				try {
-					
+					String url = "jdbc:mysql://localhost:3306/gifted_project";
+					String userName = "root";
+					String password = "root";
 					String friendFirstNameText = friendFirstNameTF.getText();
 					String friendLastNameText = friendLastNameTF.getText();
 					String friendMobileNoText = friendMobileTF.getText();
@@ -1629,7 +1096,7 @@ public class GiftedlView extends JFrame{
 					friendFirstNameTF.setText(null);
 					friendLastNameTF.setText(null);
 					friendMobileTF.setText(null);
-					Connection con = DBUtils.getConnection();
+					Connection con = DriverManager.getConnection(url, userName, password);
 					Statement st = con.createStatement();
 					String sql= "select createprofile_ID from createprofile where userId='"+userIDText+"'";
 					ResultSet rs =st.executeQuery(sql);
@@ -1643,7 +1110,7 @@ public class GiftedlView extends JFrame{
 					st.close();
 					con.close();
 				} catch (Exception e) {
-					e.printStackTrace();
+
 				}
 			}
 
@@ -1680,7 +1147,11 @@ public class GiftedlView extends JFrame{
 				createPriorityTF.setText(null);
 				String userIDText=userProfile.getUserID();
 				try {
-					Connection con = DBUtils.getConnection();
+					String url = "jdbc:mysql://localhost:3306/gifted_project";
+					String userName = "root";
+					String password = "root";
+
+					Connection con = DriverManager.getConnection(url, userName, password);
 					Statement st = con.createStatement();
 					String sql= "select createprofile_ID from createprofile where userId='"+userIDText+"'";
 					ResultSet rs =st.executeQuery(sql);
@@ -1702,7 +1173,7 @@ public class GiftedlView extends JFrame{
 					con.close();
 				} catch (Exception e) {
 					System.out.println(e);
-					e.printStackTrace();
+					//	e.printStackTrace();
 					//System.out.println("error2");
 				}
 			}
@@ -1725,7 +1196,7 @@ public class GiftedlView extends JFrame{
 					priorityText = Integer.parseInt(createPriorityUpdateTF.getText());
 					wishListCreate.setPriority(priorityText);
 					wishListCreate.setPrice(priceText);
-				} 
+				}
 				wishListCreate.setItem(itemText);
 				wishListCreate.setColor(colorText);
 				wishListCreate.setBrand(brandText);
@@ -1742,7 +1213,11 @@ public class GiftedlView extends JFrame{
 				String eventNameText=userProfile.getEventName();
 				//String userIDText=userProfile.getUserID();
 				try {
-					Connection con = DBUtils.getConnection();
+					String url = "jdbc:mysql://localhost:3306/gifted_project";
+					String userName = "root";
+					String password = "root";
+
+					Connection con = DriverManager.getConnection(url, userName, password);
 					Statement st = con.createStatement();
 					String sql= "select createprofile_ID from createprofile where userId='"+userIDText+"'";
 					ResultSet rs =st.executeQuery(sql);
@@ -1764,7 +1239,7 @@ public class GiftedlView extends JFrame{
 					con.close();
 				} catch (Exception e) {
 					System.out.println(e);
-					e.printStackTrace();
+					//	e.printStackTrace();
 					//System.out.println("error2");
 				}
 			}
@@ -1781,7 +1256,10 @@ public class GiftedlView extends JFrame{
 			loginUserIDTF.setText(null);
 			if (event.getActionCommand().equals("nextToCreateLogin")) {
 				try {
-					Connection con = DBUtils.getConnection();
+					String url = "jdbc:mysql://localhost:3306/gifted_project";
+					String userName = "root";
+					String password = "root";
+					Connection con = DriverManager.getConnection(url, userName, password);
 					Statement st = con.createStatement();
 					String sql= "select userID from createprofile where userId='"+userIDText+"'";
 					ResultSet rs =st.executeQuery(sql);
@@ -1796,11 +1274,11 @@ public class GiftedlView extends JFrame{
 					else
 					{
 						cL.show(pane, "updateProfileForm");
-					}
+										}
 					st.close();
 					con.close();
 				}catch (Exception e) {
-					e.printStackTrace();
+
 				}
 			
 			}
@@ -1819,28 +1297,38 @@ public class GiftedlView extends JFrame{
 		}
 	}
 
-	//view login
+//view login
 	private class viewLoginNextButton implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			System.out.println(" viewLoginNextButton");
 			CardLayout cL = (CardLayout) pane.getLayout();
 			String viewUserIDText = String.valueOf(viewLoginUserIDTF.getText());
 			userProfile.setViewLoginUserID(viewUserIDText);
 			viewLoginUserIDTF.setText(null);
 			if (event.getActionCommand().equals("viewProfileLogin")) {
 				try {
-					Boolean isValid = DBUtils.validateUser(viewUserIDText);
-					if(!isValid) {
+					String url = "jdbc:mysql://localhost:3306/gifted_project";
+					String userName = "root";
+					String password = "root";
+					Connection con = DriverManager.getConnection(url, userName, password);
+					Statement st = con.createStatement();
+					String sql= "select userID from createprofile where userId='"+viewUserIDText+"'";
+					ResultSet rs =st.executeQuery(sql);
+					String viewUserIDValue=" ";
+					while(rs.next()){
+						viewUserIDValue=rs.getString("userID");
+						}
+					if(!(viewUserIDValue.equals(viewUserIDText))) {
 						viewLoginUserIDChecker.setForeground(Color.RED);
 						viewLoginUserIDChecker.setText("UserID is Invalid!");		
 					}
 					else
 					{
-						loggedInUserID = viewUserIDText;
-						cL.show(pane, "userProfilePanel");//shruthi is updating
-					}
+						cL.show(pane, "");//shruthi is updating
+										}
+					st.close();
+					con.close();
 				}catch (Exception e) {
-					e.printStackTrace();
+
 				}
 			
 			}
@@ -1870,7 +1358,10 @@ public class GiftedlView extends JFrame{
 			if (event.getActionCommand().equals("nextToUpdateProfileCreateEvent")) {
 
 				try {
-					Connection con = DBUtils.getConnection();
+					String url = "jdbc:mysql://localhost:3306/gifted_project";
+					String userName = "root";
+					String password = "root";
+					Connection con = DriverManager.getConnection(url, userName, password);
 					Statement st = con.createStatement();
 					String sql= "select userID,createprofile_ID from createprofile where userId='"+userLoginIDText+"'";
 					ResultSet rs =st.executeQuery(sql);
@@ -1891,7 +1382,7 @@ public class GiftedlView extends JFrame{
 					st.close();
 					con.close();
 				}catch (Exception e) {
-					e.printStackTrace();
+
 				}
 
 
@@ -1910,7 +1401,10 @@ public class GiftedlView extends JFrame{
 			if (event.getActionCommand().equals("nextToUpdateProfileUpdateEvent")) {
 
 				try {
-					Connection con = DBUtils.getConnection();
+					String url = "jdbc:mysql://localhost:3306/gifted_project";
+					String userName = "root";
+					String password = "root";
+					Connection con = DriverManager.getConnection(url, userName, password);
 					Statement st = con.createStatement();
 					String sql= "select c.userID from createprofile c"
 							+" join createwishlist w"
@@ -2018,7 +1512,6 @@ public class GiftedlView extends JFrame{
 
 	private void connectDatabase() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/gifted_project";
 			String userName = "root";
 			String password = "root";
