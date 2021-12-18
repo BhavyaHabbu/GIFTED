@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
-public class Gifted{ 
+public class Gifted{
 
   private static final int WIDTH = 1000;
   private static final int HEIGHT = 600;
